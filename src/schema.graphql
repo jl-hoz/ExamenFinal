@@ -1,0 +1,35 @@
+type Query{
+    posts(email: String!, token: ID!): [Post!]
+    postsByAuthor(email: String!, token: ID!, author: ID!): [Post!]
+    post(email: String!, token: ID!, post: ID!): Post!
+}
+
+type Mutation{
+    sign_up(email: String!, password: String!, is_author: Boolean!): User
+    sign_in(email: String!, password: String!): ID
+    sign_out(email: String!, token: ID!): ID
+    delete_user(email: String!, token: ID!): User!
+
+    publish(email: String!, token: ID!, title: String!, description: String!): Post!
+    remove_post(email: String!, token: ID!, post: ID!): Post!
+}
+
+type Subscription{
+    authorSubscription(email: String!, token: ID!, author: ID!): Post
+}
+
+type User{
+    _id: ID!
+    email: String!
+    password: String!
+    author: Boolean!
+    token: ID
+    posts: [Post!]
+}
+
+type Post{
+    _id: ID!
+    title: String!
+    description: String!
+    author: User!
+}
